@@ -10,7 +10,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ProjectRegistrationApi", "src\ProjectRegistrationApi\ProjectRegistrationApi.xproj", "{25561078-782C-41A6-B3C9-45E199531900}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Tests", "src\Tests\Tests.xproj", "{08624CBF-56CD-48D3-B5CE-C9165F16581E}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ProjectRegistrationApi", "src\ProjectRegistrationApi\ProjectRegistrationApi.xproj", "{B90B78D8-A18B-4689-87BD-29EE9FC49763}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,15 +20,20 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{25561078-782C-41A6-B3C9-45E199531900}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{25561078-782C-41A6-B3C9-45E199531900}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{25561078-782C-41A6-B3C9-45E199531900}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{25561078-782C-41A6-B3C9-45E199531900}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08624CBF-56CD-48D3-B5CE-C9165F16581E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08624CBF-56CD-48D3-B5CE-C9165F16581E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08624CBF-56CD-48D3-B5CE-C9165F16581E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08624CBF-56CD-48D3-B5CE-C9165F16581E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B90B78D8-A18B-4689-87BD-29EE9FC49763}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B90B78D8-A18B-4689-87BD-29EE9FC49763}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B90B78D8-A18B-4689-87BD-29EE9FC49763}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B90B78D8-A18B-4689-87BD-29EE9FC49763}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{25561078-782C-41A6-B3C9-45E199531900} = {480FBE6A-5381-45E0-87CF-D902CAE9D1C8}
+		{08624CBF-56CD-48D3-B5CE-C9165F16581E} = {480FBE6A-5381-45E0-87CF-D902CAE9D1C8}
+		{B90B78D8-A18B-4689-87BD-29EE9FC49763} = {480FBE6A-5381-45E0-87CF-D902CAE9D1C8}
 	EndGlobalSection
 EndGlobal

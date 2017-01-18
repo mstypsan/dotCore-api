@@ -1,9 +1,7 @@
 ﻿namespace ProjectRegistrationApi.Controllers
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
-    using ProjectRegistrationApi.Models;
     using ProjectRegistrationApi.Models.Request;
     using ProjectRegistrationApi.Models.Response;
     using ProjectRegistrationApi.Repository;
@@ -19,31 +17,57 @@
         }
 
         [HttpGet("{projectId}/hours")]
-        public ProjectHoursPerDayResponse GetProjectHours(string projectId, [FromQuery]GetProjectHourPerDayRequest hoursPerDateRange)
+        public async Task<IActionResult> GetProjectHours(string projectId, [FromQuery]GetProjectHourPerDayRequest hoursPerDateRange)
         {
-            var projectHoursPerDay = dynamoDbClient.GetProjectHoursPerDateRange(projectId, hoursPerDateRange.FromDate, hoursPerDateRange.ToDate);
+            var project = await dynamoDbClient.GetProjectById(projectId);
 
-            return new ProjectHoursPerDayResponse
+            if (project == null)
+            {
+                return NotFound($"Projectid {projectId} is not found");
+            }
+            
+            var projectHoursPerDay = await dynamoDbClient.GetProjectHoursPerDateRange(projectId, hoursPerDateRange.FromDate, hoursPerDateRange.ToDate);
+
+            var response = new ProjectHoursPerDayResponse
             {
                 ProjectId = projectId,
                 ProjectHoursPerDay = projectHoursPerDay
             };
+
+            return Ok(response);
+
         }
 
         [HttpPost("{projectId}/hours")]
-        public NoContentResult SetProjectHours(string projectId, [FromBody]SetProjectHoursRequest hoursForDay)
+        public async Task<IActionResult> SetProjectHours(string projectId, [FromBody]SetProjectHoursRequest hoursForDay)
         {
-            dynamoDbClient.SetProjectHours(projectId, hoursForDay.Day, hoursForDay.Hours);
+            var project = await dynamoDbClient.GetProjectById(projectId);
+
+            if (project == null)
+            {
+                return NotFound($"Projectid {projectId} is not found");
+            }
+
+            await dynamoDbClient.SetProjectHours(projectId, hoursForDay.Day, hoursForDay.Hours);
 
             return NoContent();
         }
 
         [HttpGet("{projectId}/totalhours")]
-        public ProjectTotalHoursResponse GetProjectTotalHours(string projectId)
+        public async Task<IActionResult> GetProjectTotalHours(string projectId)
         {
-            var hours = dynamoDbClient.GetProjectTotalHours(projectId);
+            var project = await dynamoDbClient.GetProjectById(projectId);
 
-            return new ProjectTotalHoursResponse { ProjectId = projectId, TotalHours = hours };
+            if (project == null)
+            {
+                return NotFound($"Projectid {projectId} is not found");
+            }
+
+            var hours = await dynamoDbClient.GetProjectTotalHours(projectId);
+
+            var response = new ProjectTotalHoursResponse { ProjectId = projectId, TotalHours = hours };
+
+            return Ok(response);
         }
 
     }
