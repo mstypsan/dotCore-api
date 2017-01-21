@@ -6,14 +6,24 @@
     using Amazon;
     using Amazon.DynamoDBv2;
     using Amazon.DynamoDBv2.DocumentModel;
-    using Amazon.DynamoDBv2.Model;
     using ProjectRegistrationApi.Models.Response;
 
     public class DynamoDbClient : IDynamoDbClient
     {
         private const string ProjectHoursTable = "ProjectHours";
+        private const string ProjectTable = "Projects";
+
         private const string DateFormat = "yyyy-MM-dd";
-        public int GetProjectTotalHours(string projectId)
+
+        public async Task<Document> GetProjectById(string projectId)
+        {
+            var client = GetClient();
+            var projectHoursTable = Table.LoadTable(client, ProjectTable);
+
+            return await projectHoursTable.GetItemAsync(projectId);
+        }
+
+        public async Task<int> GetProjectTotalHours(string projectId)
         {
             var client = GetClient();
             var projectHoursTable = Table.LoadTable(client, ProjectHoursTable);
@@ -32,7 +42,7 @@
             var documentSet = new List<Document>();
             do
             {
-                documentSet = search.GetNextSet();
+                documentSet = await search.GetNextSetAsync();
                 foreach (var document in documentSet)
                 {
                     hours += int.Parse(document["Hours"].AsPrimitive().Value.ToString());
@@ -42,7 +52,7 @@
             return hours;
         }
         
-        public List<ProjectHoursPerDay> GetProjectHoursPerDateRange(string projectId, DateTime fromDate, DateTime toDate)
+        public async Task<List<ProjectHoursPerDay>> GetProjectHoursPerDateRange(string projectId, DateTime fromDate, DateTime toDate)
         {
             var client = GetClient();
             var projectHoursTable = Table.LoadTable(client, ProjectHoursTable);
@@ -61,7 +71,7 @@
             var documentSet = new List<Document>();
             do
             {
-                documentSet = search.GetNextSet();
+                documentSet = await search.GetNextSetAsync();
                 foreach (var document in documentSet)
                 {
                     projectHoursPerDay.Add(new ProjectHoursPerDay
